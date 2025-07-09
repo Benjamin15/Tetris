@@ -1,11 +1,36 @@
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import MenuScreen from './src/screens/MenuScreen';
+import GameScreen from './src/screens/GameScreen';
+import LobbyScreen from './src/screens/LobbyScreen';
 
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState('menu');
+  const [gameConfig, setGameConfig] = useState(null);
+
+  const navigateToScreen = (screen, config = null) => {
+    setCurrentScreen(screen);
+    if (config) setGameConfig(config);
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'menu':
+        return <MenuScreen onNavigate={navigateToScreen} />;
+      case 'lobby':
+        return <LobbyScreen onNavigate={navigateToScreen} />;
+      case 'game':
+        return <GameScreen onNavigate={navigateToScreen} config={gameConfig} />;
+      default:
+        return <MenuScreen onNavigate={navigateToScreen} />;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {renderScreen()}
+      <StatusBar style="light" />
     </View>
   );
 }
@@ -13,8 +38,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#1a1a2e',
   },
 });
