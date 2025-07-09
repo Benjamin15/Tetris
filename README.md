@@ -10,6 +10,13 @@ Un jeu Tetris Battle Royale développé avec React Native et Expo, supportant le
 - Contrôles tactiles optimisés pour mobile
 - Interface moderne avec thème cyberpunk
 
+### Mode Versus Local
+- Jeu à deux joueurs sur le même appareil
+- Double grille de jeu côte à côte
+- Contrôles tactiles séparés pour chaque joueur
+- Système d'attaque par lignes complètes
+- Envoi de "lignes garbage" entre les joueurs
+
 ### Mode Battle Royale (1vs1)
 - Matchmaking automatique
 - Combat en temps réel contre un autre joueur
@@ -22,10 +29,17 @@ Un jeu Tetris Battle Royale développé avec React Native et Expo, supportant le
 
 ## 🎯 Contrôles
 
+### Mode Solo/Entraînement
 - **Swipe horizontal** : Déplacer la pièce gauche/droite
 - **Swipe vertical** : Chute rapide
 - **Tap** : Rotation de la pièce
 - **Boutons tactiles** : Contrôles alternatifs
+
+### Mode Versus Local
+- **Joueur 1 (gauche)** : Zone de swipe + boutons dédiés
+- **Joueur 2 (droite)** : Zone de swipe + boutons dédiés
+- **Tap sur la grille** : Rotation pour chaque joueur
+- Contrôles séparés et optimisés pour le jeu à deux
 
 ## 🛠️ Technologies
 
@@ -74,16 +88,21 @@ src/
 ├── components/          # Composants réutilisables
 │   ├── GameBoard.js    # Plateau de jeu principal
 │   ├── ScoreBoard.js   # Affichage score et infos
-│   └── TouchControls.js # Contrôles tactiles
+│   ├── TouchControls.js # Contrôles tactiles (solo)
+│   └── VersusControls.js # Contrôles tactiles (versus)
 ├── game/               # Logique de jeu
-│   └── TetrisEngine.js # Moteur de jeu principal
+│   ├── TetrisEngine.js # Moteur de jeu principal
+│   ├── VersusGameManager.js # Gestionnaire de partie versus
+│   └── constants.js    # Constantes du jeu
 ├── screens/            # Écrans de l'application
 │   ├── MenuScreen.js   # Menu principal
-│   ├── GameScreen.js   # Écran de jeu
-│   └── LobbyScreen.js  # Lobby multijoueur
+│   ├── GameScreen.js   # Écran de jeu (solo/training)
+│   ├── LobbyScreen.js  # Lobby multijoueur
+│   └── VersusScreen.js # Écran de jeu versus local
 ├── multiplayer/        # Gestion multijoueur
 │   └── SocketManager.js # Gestionnaire de connexions
 └── utils/              # Fonctions utilitaires
+    └── gameUtils.js    # Utilitaires de jeu
 ```
 
 ## 🎨 Design System
@@ -136,6 +155,7 @@ Les contributions sont les bienvenues ! Voici comment procéder :
 - [x] Moteur de jeu Tetris
 - [x] Contrôles tactiles
 - [x] Mode solo fonctionnel
+- [x] Mode versus local (2 joueurs)
 - [x] Interface multijoueur (UI)
 - [ ] Serveur multijoueur
 - [ ] Tests unitaires

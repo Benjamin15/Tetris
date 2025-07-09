@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import MenuScreen from './src/screens/MenuScreen';
 import GameScreen from './src/screens/GameScreen';
 import LobbyScreen from './src/screens/LobbyScreen';
+import VersusScreen from './src/screens/VersusScreen';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('menu');
@@ -22,6 +23,8 @@ export default function App() {
         return <LobbyScreen onNavigate={navigateToScreen} />;
       case 'game':
         return <GameScreen onNavigate={navigateToScreen} config={gameConfig} />;
+      case 'versus':
+        return <VersusScreen onNavigate={navigateToScreen} />;
       default:
         return <MenuScreen onNavigate={navigateToScreen} />;
     }

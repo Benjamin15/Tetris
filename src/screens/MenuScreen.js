@@ -22,6 +22,10 @@ const MenuScreen = ({ onNavigate }) => {
     );
   };
 
+  const handlePlayVersus = () => {
+    onNavigate('versus');
+  };
+
   const handleTraining = () => {
     onNavigate('game', { mode: 'training' });
   };
@@ -50,6 +54,14 @@ const MenuScreen = ({ onNavigate }) => {
         >
           <Text style={styles.buttonText}>BATTLE ROYALE</Text>
           <Text style={styles.buttonSubtext}>1 vs 1</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={[styles.menuButton, styles.versusButton]}
+          onPress={handlePlayVersus}
+        >
+          <Text style={styles.buttonText}>VERSUS LOCAL</Text>
+          <Text style={styles.buttonSubtext}>2 joueurs - même écran</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
@@ -144,8 +156,11 @@ const styles = StyleSheet.create({
   multiplayerButton: {
     borderColor: '#ff6b6b',
   },
-  trainingButton: {
+  versusButton: {
     borderColor: '#4ecdc4',
+  },
+  trainingButton: {
+    borderColor: '#f0a000',
   },
   buttonText: {
     color: '#fff',

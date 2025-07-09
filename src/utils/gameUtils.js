@@ -1,4 +1,4 @@
-import { SCORING, PROGRESSION } from './constants';
+import { SCORING, PROGRESSION } from '../game/constants';
 
 /**
  * Calcule le score basé sur le nombre de lignes et le niveau
