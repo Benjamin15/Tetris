@@ -37,10 +37,11 @@ export const MULTIPLAYER = {
 
 // Constantes d'attaque
 export const ATTACK = {
-  linesRequired: 2, // Minimum de lignes pour attaquer
+  linesRequired: 1, // Minimum de lignes pour attaquer
   attackMultiplier: {
-    2: 1, // Double = 1 ligne d'attaque
-    3: 2, // Triple = 2 lignes d'attaque
+    1: 1, // Simple = 1 ligne d'attaque (changé de 0 à 1 pour plus d'action)
+    2: 2, // Double = 2 lignes d'attaque
+    3: 3, // Triple = 3 lignes d'attaque
     4: 4, // Tetris = 4 lignes d'attaque
   },
   comboBonus: 0.5, // Bonus par combo
@@ -84,6 +85,23 @@ export const THEME = {
   },
 };
 
+// Constantes de développement et debug
+export const DEBUG = {
+  enableLogs: true,
+  mockMultiplayer: false, // Mode test sans serveur
+  skipServerConnection: false,
+  logSocketEvents: true,
+  quickMatchTest: true, // Pour tester rapidement le matchmaking
+};
+
+// Mode de test (pour développement)
+export const TEST_MODE = {
+  enabled: false,
+  simulateOpponent: true,
+  autoWin: false,
+  fastGame: true,
+};
+
 export default {
   SCORING,
   PROGRESSION,
@@ -94,4 +112,6 @@ export default {
   CONTROLS,
   PIECE_COLORS,
   THEME,
+  DEBUG,
+  TEST_MODE,
 };

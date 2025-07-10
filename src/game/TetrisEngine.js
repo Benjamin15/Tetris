@@ -218,7 +218,11 @@ export class TetrisEngine {
       this.level = Math.floor(this.lines / 10) + 1;
       this.dropInterval = Math.max(50, 1000 - (this.level - 1) * 50);
       
-      this.onLinesClear && this.onLinesClear(clearedLines);
+      // Déclencher la callback pour les attaques multijoueur
+      console.log(`🔥 TetrisEngine: ${clearedLines} lignes supprimées, callback onLinesClear`);
+      if (this.onLinesClear) {
+        this.onLinesClear(clearedLines);
+      }
     }
     
     // Générer la prochaine pièce
@@ -296,8 +300,19 @@ export class TetrisEngine {
       isGameOver: this.isGameOver
     };
   }
+
+  // Obtenir seulement le plateau (sans la pièce courante)
+  getBoard() {
+    return this.board.map(row => [...row]); // Clone profond
+  }
   
   // Méthodes pour le multijoueur
+  receiveAttack(lines) {
+    if (lines > 0 && !this.isGameOver) {
+      this.addGarbageLines(lines);
+    }
+  }
+
   addGarbageLines(count) {
     for (let i = 0; i < count; i++) {
       this.board.pop();

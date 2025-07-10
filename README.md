@@ -18,10 +18,12 @@ Un jeu Tetris Battle Royale développé avec React Native et Expo, supportant le
 - Envoi de "lignes garbage" entre les joueurs
 
 ### Mode Battle Royale (1vs1)
-- Matchmaking automatique
+- **NOUVEAU** : Matchmaking automatique en ligne
 - Combat en temps réel contre un autre joueur
+- Serveur Node.js/Socket.io intégré
 - Système d'attaque par lignes complètes
 - Envoi de "lignes garbage" à l'adversaire
+- Reconnexion automatique en cas de perte de réseau
 
 ### Mode Entraînement
 - Pratique libre sans contraintes
@@ -62,9 +64,29 @@ Un jeu Tetris Battle Royale développé avec React Native et Expo, supportant le
 git clone [repository-url]
 cd tetris
 
-# Installer les dépendances
+# Installer les dépendances de l'app
 npm install
 
+# Installer les dépendances du serveur
+cd server
+npm install
+cd ..
+```
+
+### Lancement
+
+#### 1. Démarrer le serveur (pour le mode Battle Royale)
+```bash
+# Option 1: Script automatique
+./start-server.sh
+
+# Option 2: Manuel
+cd server
+npm start
+```
+
+#### 2. Lancer l'application mobile
+```bash
 # Lancer l'application
 npm start
 ```
@@ -81,6 +103,59 @@ npm run ios
 npm run web
 ```
 
+## 🎯 Comment Tester le Mode Battle Royale
+
+### 1. Démarrer le serveur
+```bash
+# Dans un terminal
+cd server
+npm start
+```
+Le serveur démarre sur `http://localhost:3002`
+
+### 2. Lancer l'application
+```bash
+# Dans un autre terminal
+npm start
+```
+
+### 3. Tester avec 2 joueurs (IMPORTANT !)
+- **Option A** : Appareil physique + Expo Web (appuyez sur 'w')
+- **Option B** : 2 émulateurs différents (Android + iOS)
+- **Option C** : 2 appareils physiques distincts
+
+⚠️ **Note** : Il faut vraiment 2 instances pour tester le matchmaking !
+
+### 4. Navigation
+1. Menu Principal → **"BATTLE ROYALE"**
+2. L'app se connecte automatiquement au serveur
+3. **Attente d'un vrai adversaire** (pas de simulation)
+4. Match automatique quand 2 joueurs connectés !
+
+### 🏆 Fonctionnalités en Combat
+- **Attaques automatiques** : Complétez 2+ lignes pour attaquer
+- **Lignes garbage** : Apparaissent en bas de l'écran adverse
+- **Score en temps réel** : Visible en haut de l'écran
+- **Victoire** : Quand l'adversaire ne peut plus jouer
+
+### 🔧 Dépannage WebSocket
+Si vous voyez l'erreur "websocket error" :
+
+**🚀 Solution complète** : Voir [WEBSOCKET_SOLUTION.md](./WEBSOCKET_SOLUTION.md)
+
+#### Quick Fix Android Emulator
+```bash
+adb reverse tcp:3002 tcp:3002
+```
+
+#### Quick Fix Test Web
+```bash
+npm start
+# Appuyer sur 'w' pour tester en navigateur d'abord
+```
+
+---
+
 ## 🏗️ Architecture
 
 ```
@@ -93,16 +168,22 @@ src/
 ├── game/               # Logique de jeu
 │   ├── TetrisEngine.js # Moteur de jeu principal
 │   ├── VersusGameManager.js # Gestionnaire de partie versus
+│   ├── BattleRoyaleManager.js # Gestionnaire Battle Royale
 │   └── constants.js    # Constantes du jeu
 ├── screens/            # Écrans de l'application
 │   ├── MenuScreen.js   # Menu principal
 │   ├── GameScreen.js   # Écran de jeu (solo/training)
 │   ├── LobbyScreen.js  # Lobby multijoueur
-│   └── VersusScreen.js # Écran de jeu versus local
+│   ├── VersusScreen.js # Écran de jeu versus local
+│   └── BattleRoyaleScreen.js # Écran Battle Royale en ligne
 ├── multiplayer/        # Gestion multijoueur
 │   └── SocketManager.js # Gestionnaire de connexions
 └── utils/              # Fonctions utilitaires
     └── gameUtils.js    # Utilitaires de jeu
+
+server/                 # Serveur multijoueur
+├── server.js          # Serveur Node.js/Socket.io
+└── package.json       # Dépendances serveur
 ```
 
 ## 🎨 Design System
@@ -121,8 +202,9 @@ Design cyberpunk sombre avec des accents néon cyan.
 ## 🚧 Développement Futur
 
 ### Multijoueur
-- [ ] Serveur Node.js avec Socket.io
-- [ ] Système de matchmaking par rating
+- [x] Serveur Node.js avec Socket.io
+- [x] Système de matchmaking par rating
+- [x] Mode Battle Royale 1vs1 en ligne
 - [ ] Mode Battle Royale 4+ joueurs
 - [ ] Tournois et classements
 
@@ -157,7 +239,9 @@ Les contributions sont les bienvenues ! Voici comment procéder :
 - [x] Mode solo fonctionnel
 - [x] Mode versus local (2 joueurs)
 - [x] Interface multijoueur (UI)
-- [ ] Serveur multijoueur
+- [x] Serveur multijoueur (Node.js/Socket.io)
+- [x] Mode Battle Royale en ligne
+- [x] Matchmaking automatique
 - [ ] Tests unitaires
 - [ ] Optimisations performance
 - [ ] Publication sur stores
